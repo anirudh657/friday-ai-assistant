@@ -55,6 +55,7 @@ Performs automation using PyAutoGUI / system libraries
 Converts response to speech using pyttsx3
 
 📁 Project Structure
+
 friday-ai-assistant/
 │
 ├── main.py              # Core assistant logic
@@ -65,6 +66,7 @@ friday-ai-assistant/
 │   └── test_main.py     # Unit tests
 ├── screenshot.png      # System preview
 └── README.md
+
 
 ⚙️ Installation
 1. Clone Repository
