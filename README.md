@@ -53,6 +53,7 @@ Performs automation using PyAutoGUI / system libraries
 6. Voice Output
 
 Converts response to speech using pyttsx3
+
 📁 Project Structure
 friday-ai-assistant/
 │
@@ -64,6 +65,7 @@ friday-ai-assistant/
 │   └── test_main.py     # Unit tests
 ├── screenshot.png      # System preview
 └── README.md
+
 ⚙️ Installation
 1. Clone Repository
 git clone https://github.com/anirudh657/friday-ai-assistant.git
