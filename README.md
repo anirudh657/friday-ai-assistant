@@ -68,6 +68,7 @@ friday-ai-assistant/
 └── README.md
 
 
+
 ⚙️ Installation
 1. Clone Repository
 git clone https://github.com/anirudh657/friday-ai-assistant.git
