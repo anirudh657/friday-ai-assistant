@@ -2,13 +2,15 @@ import ollama
 import pywhatkit
 import requests
 import speech_recognition as sr
-import pyttsx3
+import time
 import os
 import webbrowser
 import json
 from datetime import datetime
-import time
+import asyncio
+import edge_tts
 import pyautogui
+from playsound import playsound
 
 # ---------------- MEMORY ----------------
 MEMORY_FILE = "memory.json"
@@ -28,20 +30,31 @@ memory = load_memory()
 
 # ---------------- VOICE ----------------
 def speak(text):
+
     print("FRIDAY:", text)
 
-    engine = pyttsx3.init()
-    engine.setProperty("rate", 145)
-    engine.setProperty("volume", 1.0)
+    async def speak_async():
 
-    voices = engine.getProperty("voices")
-    if len(voices) > 1:
-        engine.setProperty("voice", voices[1].id)
+        filename = f"voice_{int(time.time())}.mp3"
 
-    engine.say(text)
-    engine.runAndWait()
+        communicate = edge_tts.Communicate(
+            text=text,
+            voice="en-US-AriaNeural"
+        )
 
-speak("FRIDAY is now running in stable mode")
+        await communicate.save(filename)
+
+        playsound(filename)
+
+        os.remove(filename)
+
+    asyncio.run(speak_async())
+
+
+speak("FRIDAY is now Activated")
+
+
+
 
 # ---------------- AI ----------------
 def ai_response(command):
@@ -148,8 +161,8 @@ while True:
         print("You said:", text)
 
         intent = detect_intent(command)
-        if intent != "ai" and intent != "exit":
-            speak("yes sir")
+        if intent in ["open", "search", "play_song"]:
+           speak("Yes boss")
     
 
         # EXIT
