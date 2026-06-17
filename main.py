@@ -12,6 +12,7 @@ import edge_tts
 import pyautogui
 from playsound import playsound
 
+
 # ---------------- MEMORY ----------------
 MEMORY_FILE = "memory.json"
 
@@ -27,6 +28,8 @@ def save_memory(data):
         json.dump(data, f)
 
 memory = load_memory()
+
+
 
 # ---------------- VOICE ----------------
 def speak(text):
@@ -94,9 +97,53 @@ def get_weather(city="Delhi"):
 
     except:
         return "Unable to get weather information"    
+    
+    
 
 # ---------------- SPEECH ----------------
 r = sr.Recognizer()
+def handle_complex_command(command):
+
+    command = command.lower()
+
+    # Open YouTube and play a song
+    if "open youtube and play" in command:
+
+        song = command.split("play")[-1].strip()
+
+        speak(f"Opening YouTube and playing {song}")
+
+        pywhatkit.playonyt(song)
+
+        return True
+    
+    # Open Chrome and search
+    if "open chrome and search" in command:
+
+        query = command.split("search")[-1].strip()
+
+        speak(f"Opening Chrome and searching {query}")
+
+        webbrowser.open(
+            f"https://www.google.com/search?q={query}"
+    )
+
+        return True
+    
+    # Open Spotify and play song
+    if "open spotify and play" in command:
+
+        song = command.split("play")[-1].strip()
+
+        speak(f"Opening Spotify and playing {song}")
+
+        webbrowser.open(
+            f"https://open.spotify.com/search/{song}"
+    )
+
+        return True
+
+    return False
 
 # ---------------- INTENT ENGINE ----------------
 def detect_intent(command):
@@ -136,6 +183,8 @@ def detect_intent(command):
     
     if "weather" in command:
         return "weather"
+    
+    
 
     return "ai"
 
@@ -157,6 +206,9 @@ while True:
 
         text = r.recognize_google(audio)
         command = text.lower()
+
+        if handle_complex_command(command):
+           continue
 
         print("You said:", text)
 
@@ -256,6 +308,9 @@ while True:
         elif intent == "weather":
             speak(get_weather())
 
+         
+
+        
 
         # VOLUME
         elif intent == "volume_up":
